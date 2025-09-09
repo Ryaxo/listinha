@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <title>🎁 Lista de Presentes — Mozi & Laurinha</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Lista de presentes do Mozi e da Laurinha." />
+  <meta property="og:title" content="🎁 Lista de Presentes — Mozi & Laurinha" />
+  <meta property="og:description" content="ideias de presentes do Mozi e da Laurinha." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>">
+
+  <style>
+    :root{
+      --bg1:#0f0c29;
+      --bg2:#302b63;
+      --bg3:#24243e;
+      --card:rgba(255,255,255,.12);
+      --card-border:rgba(255,255,255,.25);
+      --text:#ffffff;
+      --muted:#d6d6e7;
+      --accent:#ff5fd2;
+      --accent-2:#00ffd1;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    html[data-theme='light']{
+      --bg1:#fef7ff;
+      --bg2:#ffe8f8;
+      --bg3:#f3f8ff;
+      --card:rgba(255,255,255,.75);
+      --card-border:rgba(0,0,0,.08);
+      --text:#222;
+      --muted:#555;
+      --accent:#e33fd0;
+      --accent-2:#0bb3a2;
+      --shadow:0 10px 25px rgba(0,0,0,.12);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      color:var(--text);
+      background: linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),var(--bg2));
+      background-size: 400% 400%;
+      animation: gradient 18s ease infinite;
+      overflow-x:hidden;
+    }
+    @keyframes gradient {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    header{
+      position:sticky; top:0; z-index:5;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(to right, rgba(0,0,0,.25), rgba(0,0,0,.05));
+      border-bottom: 1px solid var(--card-border);
+    }
+    .wrap{
+      max-width:1000px; margin-inline:auto; padding:18px 18px;
+    }
+    .title{
+      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    }
+    .title h1{
+      margin:0; font-size: clamp(22px, 3vw, 34px);
+      display:flex; align-items:center; gap:.5rem;
+      text-shadow: 0 6px 20px rgba(0,0,0,.25);
+    }
+    .title .chip{
+      font-weight:600; letter-spacing:.3px;
+      padding:.4rem .7rem; border-radius:999px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color:#111; box-shadow: var(--shadow);
+    }
+
+    .controls{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items: center;
+    }
+    .btn, select, input[type="search"]{
+      border:1px solid var(--card-border);
+      background:var(--card);
+      color:var(--text);
+      padding:.7rem .9rem; border-radius:12px;
+      box-shadow: var(--shadow);
+      outline:none; font-weight:600;
+      transition: transform .08s ease, border-color .2s ease, background .2s ease;
+      backdrop-filter: blur(10px);
+    }
+    .btn:hover, select:hover, input[type="search"]:hover{
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+    .btn:active{ transform: translateY(0); }
+    
+    select option {
+      background: var(--bg2);
+      color: var(--text);
+    }
+
+    .btn.primary{
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color:#111; border-color:transparent;
+    }
+
+    main{ padding:22px 18px 80px; }
+    .grid{
+      max-width:1000px; margin: 0 auto;
+      display:grid; gap:16px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    .card{
+      position:relative;
+      border:1px solid var(--card-border);
+      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
+      border-radius:16px; padding:16px 14px;
+      box-shadow: var(--shadow);
+      transform: translateY(6px);
+      opacity: 0;
+      animation: reveal .7s ease forwards;
+    }
+    @keyframes reveal {
+      from { transform: translateY(14px) scale(.98); opacity:0; }
+      to   { transform: translateY(0) scale(1); opacity:1; }
+    }
+
+    .card h3{
+      margin:0 0 8px 0; font-size:1.05rem; display:flex; gap:.5rem; align-items:center;
+    }
+    .card p{
+      margin:.4rem 0 .8rem; color:var(--muted); font-size:.95rem; line-height:1.35;
+    }
+    .actions{ display:flex; gap:8px; flex-wrap:wrap; }
+    .actions a, .actions button{
+      border:1px solid var(--card-border);
+      background:var(--card);
+      color:var(--text);
+      text-decoration:none; font-weight:700; font-size:.9rem;
+      padding:.55rem .7rem; border-radius:10px;
+      cursor:pointer; transition: transform .08s ease, border-color .2s ease;
+      backdrop-filter: blur(8px);
+    }
+    .actions a:hover, .actions button:hover{ transform: translateY(-1px); border-color:var(--accent); }
+    
+    .section-heading{
+      max-width:1000px; margin:0 auto 10px; padding:0 2px;
+      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    }
+    .hint{ color:var(--muted); font-size:.92rem; }
+
+    .float-emoji{
+      position: fixed; z-index:0; opacity:.25; pointer-events:none; filter: blur(.3px);
+      animation: float 18s linear infinite;
+    }
+    @keyframes float{
+      0%{ transform: translateY(110vh) rotate(0deg); }
+      100%{ transform: translateY(-20vh) rotate(360deg); }
+    }
+
+    footer{
+      text-align:center; color:var(--muted); padding:40px 16px 60px;
+    }
+
+    .hide{ display:none !important; }
+
+    /* --- ESTILO DO BOTÃO DE MÚSICA --- */
+    #musicBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 999;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+      transition: transform 0.2s ease;
+    }
+    #musicBtn:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <audio id="christmasMusic" src="musica_natal.mp3" loop></audio>
+
+  <div class="float-emoji" style="left:5%; font-size:36px; animation-delay:0s">🎁</div>
+  <div class="float-emoji" style="left:20%; font-size:28px; animation-delay:3s">✨</div>
+  <div class="float-emoji" style="left:35%; font-size:42px; animation-delay:6s">💖</div>
+  <div class="float-emoji" style="left:55%; font-size:34px; animation-delay:9s">🎄</div>
+  <div class="float-emoji" style="left:75%; font-size:40px; animation-delay:12s">🛍️</div>
+  <div class="float-emoji" style="left:90%; font-size:30px; animation-delay:15s">🎉</div>
+
+  <header>
+    <div class="wrap">
+      <div class="title">
+        <h1>🎁 Listas de Presentes <span class="chip">Mozi & Laurinha</span> <span aria-hidden="true">✨</span></h1>
+      </div>
+      <div class="controls" role="group" aria-label="Controles">
+        <select id="pessoa" aria-label="Selecionar pessoa">
+          <option value="mozi">Mozi 💘</option>
+          <option value="laurinha">Laurinha 🌷</option>
+        </select>
+        <input id="busca" type="search" placeholder="Pesquisar item, loja, categoria… 🔎" aria-label="Pesquisar"/>
+        <button class="btn" id="limpar">Limpar busca</button>
+        <button class="btn" id="toggleTheme" title="Alternar tema">🌓 Tema</button>
+        <button class="btn" id="shareBtn">Compartilhar lista</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-heading">
+      <h2 id="heading">💘 Lista do Mozi</h2>
+      <span class="hint" id="countHint">0 itens</span>
+    </div>
+    <section id="grid" class="grid" aria-live="polite" aria-busy="false"></section>
+
+    <footer>
+      <p>Nota do Mozi: Caso os itens da minha lista estiverem caros, NÃO COMPRAR!! 😚</p>
+      <p>💖Balinha de Gomes, meu desejo de todo natal, pátoda vida 💖</p>
+    </footer>
+  </main>
+  
+  <button id="musicBtn" title="Tocar música de Natal">🎅🏻</button>
+
+  <script>
+    // ========= DADOS =========
+    const LISTAS = {
+      mozi: [
+        { titulo:"Muitos Beijinhos, abraços e chamegos", emoji:"💞", link:null, nota:"INESTIMÁVEL" },
+        { titulo:"Passeio com o amorzinho da minha vida", emoji:"🥰", link:null, nota:"INESTIMÁVEL" },
+        { titulo:"Um vislumbre do olhar do amor da minha vida", emoji:"💖", link:null, nota:"INESTIMÁVEL" },
+
+        { titulo:"Clamper", emoji:"⚡", link:"https://www.amazon.com.br/gp/product/B0DC82WBFD" },
+        { titulo:"Frigideira", emoji:"🍳", link:"https://www.amazon.com.br/Frigideira-ColorStone-Antiaderente-Tit%C3%A2nio-Euro/dp/B08MT5R5CP" },
+
+        { titulo:"Bonequinho do mini Gojo", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005007189957423.html" },
+        { titulo:"Bonequinho do Gojo avuadero mucho loco 🫳🏻🫴🏻🫳🏻🫴🏻", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005007719632670.html" },
+        { titulo:"Bonequinho do Gojo avuadero 2", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005007426525958.html" },
+        { titulo:"Bonequinho do Gojo Jogo", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005008793909030.html" },
+        { titulo:"Bonequinho do Geto do bem", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005007864409148.html" },
+        { titulo:"Bonequinho do Sinuka", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005007003878278.html" },
+        { titulo:"Bonequinho do Toji", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005006614953851.html" },
+        { titulo:"Bonequinho do Toji facadinha", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005007853576894.html" },
+        { titulo:"Bonequinho do Toji porradasso", emoji:"🤖", link:"https://pt.aliexpress.com/item/1005008112860556.html" },
+
+        { titulo:"Fita Led", emoji:"✨", link:"https://pt.aliexpress.com/item/1005007908552360.html" },
+        { titulo:"Saco de pancadas", emoji:"🥊", link:"https://www.amazon.com.br/Saco-Pancada-Profissional-Suporte-Gorilla/dp/B07QMXDMRW" },
+        { titulo:"Caixa térmica", emoji:"🧊", link:"https://www.amazon.com.br/Caixa-Termica-Termolar-Cinza-3502/dp/B07DXBDF9B" },
+        { titulo:"Churrasqueira", emoji:"🍖", link:"https://www.amazon.com.br/Churrasqueira-Redonda-Esmaltada-Guarapari-Mor/dp/B0772VSSKK" },
+        { titulo:"Mini Aspirador de pó", emoji:"💨", link:"https://pt.aliexpress.com/item/1005008129594453.html" },
+        { titulo:"Otomatone", emoji:"🎵", link:"https://pt.aliexpress.com/item/1005002122369476.html" },
+        { titulo:"M5StickC PLUS2 nenê qué 🥺🥺", emoji:"👩🏻‍💻", link:"https://pt.aliexpress.com/item/1005008078825559.html" },
+        { titulo:"Nebulizador", emoji:"🩹", link:"https://www.amazon.com.br/Nebulizador-Ultrass%C3%B4nico-Ultraneb-Nebudes2-G-Tech/dp/B07HPH64WK" },
+        { titulo:"Perfume Club De Nuit", emoji:"💐", link:"https://shopee.com.br/Perfume-Árabe-Armaf-Club-De-Nuit-Intense-Eau-De-Toilette-For-Man-105ml-Original-i.385397276.22893284979" },
+        { titulo:"Perfume do hominho (muito caro, não comprar)", emoji:"💐", link:"https://shopee.com.br/Le-Male-Le-Parfum-Perfume-Masculino-Eau-de-Parfum-i.602117686.23793671575" },
+        { titulo:"Perfume Nautica Voyage", emoji:"💐", link:"https://shopee.com.br/Perfume-Nautica-Voyage-Masculino-Eau-de-Toilette-100ml-i.602117686.23397641169" },
+        { titulo:"Qualquer perfume que achares bom/legal", emoji:"💐", link:null },
+      ],
+      laurinha: [
+        { titulo:"Balança", emoji:"⚖️", link:"#", nota:"tem nada" },
+        { titulo:"Protetor solar facial", emoji:"🌞", link:"#", nota:"tem nada" }
+      ]
+    };
+
+    // ========= UTIL =========
+    const $ = sel => document.querySelector(sel);
+    const grid = $('#grid');
+    const heading = $('#heading');
+    const countHint = $('#countHint');
+    const pessoaSelect = $('#pessoa');
+    const buscaInput = $('#busca');
+
+    const params = new URLSearchParams(location.search);
+    const startPessoa = (params.get('p') || 'mozi').toLowerCase();
+    if(['mozi','laurinha'].includes(startPessoa)) pessoaSelect.value = startPessoa;
+
+    function createCard(item, index){
+      const el = document.createElement('article');
+      el.className = 'card';
+      el.style.animationDelay = (index * 0.03) + 's';
+
+      const title = document.createElement('h3');
+      title.innerHTML = `${item.emoji ?? '🎁'} <span>${escapeHTML(item.titulo)}</span>`;
+
+      const p = document.createElement('p');
+      if(item.nota || item.link===null){
+        p.textContent = item.nota ? item.nota : (item.link === null ? 'Num tem link' : '');
+      }else{
+        p.textContent = 'Clica em "Abrir link" ou em "Copiar link" pra... copiar. 🤯';
+      }
+
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+
+      if(item.link){
+        const a = document.createElement('a');
+        a.href = item.link; a.target="_blank"; a.rel="noopener";
+        a.textContent = '🔗 Abrir link';
+        actions.appendChild(a);
+
+        const copy = document.createElement('button');
+        copy.type='button';
+        copy.textContent = '📋 Copiar link';
+        copy.addEventListener('click', async ()=>{
+          try{
+            await navigator.clipboard.writeText(item.link);
+            toast('Link copiado! ✨🤗');
+            confetti();
+          }catch{
+            alert('Num deu de copiar 😢');
+          }
+        });
+        actions.appendChild(copy);
+      }else{
+        const heart = document.createElement('button');
+        heart.type='button';
+        heart.textContent = '💞 Aceito.';
+        heart.addEventListener('click', ()=>{
+          confetti(); toast('Te amo 🥰💘');
+        });
+        actions.appendChild(heart);
+      }
+      
+      el.appendChild(title);
+      el.appendChild(p);
+      el.appendChild(actions);
+      return el;
+    }
+
+    function escapeHTML(str){
+      return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function render(pessoa){
+      const termos = buscaInput.value.trim().toLowerCase();
+      grid.setAttribute('aria-busy','true');
+      grid.innerHTML = '';
+      const data = LISTAS[pessoa];
+      const filtrado = !termos ? data : data.filter(x =>
+        (x.titulo||'').toLowerCase().includes(termos) ||
+        (x.nota||'').toLowerCase().includes(termos)
+      );
+      heading.textContent = (pessoa==='mozi' ? '💘 Lista do Mozi' : '🌷 Lista da Laurinha');
+      countHint.textContent = `${filtrado.length} item${filtrado.length!==1?'s':''}`;
+
+      filtrado.forEach((item,i)=> grid.appendChild(createCard(item,i)));
+      grid.setAttribute('aria-busy','false');
+    }
+
+    // ========= CONFETTI =========
+    function confetti(){
+      const n = 18;
+      for(let i=0;i<n;i++){
+        const s = document.createElement('span');
+        s.textContent = ['🎉','✨','💖','💝','🎊'][Math.floor(Math.random()*5)];
+        s.style.position='fixed';
+        s.style.left = (Math.random()*100)+'vw';
+        s.style.top = '0';
+        s.style.fontSize = (16 + Math.random()*20)+'px';
+        s.style.zIndex = 9999;
+        s.style.transition = 'transform 1.2s ease-out, opacity 1.2s ease-out';
+        document.body.appendChild(s);
+        requestAnimationFrame(()=>{
+          s.style.transform = `translateY(${60+Math.random()*60}vh) rotate(${Math.random()*540-270}deg)`;
+          s.style.opacity = 0;
+        });
+        setTimeout(()=> s.remove(), 1300);
+      }
+    }
+
+    // ========= TOAST =========
+    function toast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.position='fixed'; t.style.left='50%'; t.style.bottom='24px';
+      t.style.transform='translateX(-50%)';
+      t.style.padding='10px 14px'; t.style.border='1px solid var(--card-border)';
+      t.style.background='var(--card)'; t.style.backdropFilter='blur(10px)';
+      t.style.borderRadius='10px';
+      t.style.boxShadow='var(--shadow)';
+      t.style.zIndex=10000;
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.style.transition='opacity .5s'; t.style.opacity=0; }, 1200);
+      setTimeout(()=> t.remove(), 1800);
+    }
+
+    // ========= TEMA =========
+    const toggleBtn = document.querySelector('#toggleTheme');
+    toggleBtn.addEventListener('click', ()=>{
+        const htmlEl = document.documentElement;
+        if (htmlEl.hasAttribute('data-theme')) {
+            htmlEl.removeAttribute('data-theme');
+            toast('Tema: escuro 🌙');
+        } else {
+            htmlEl.setAttribute('data-theme', 'light');
+            toast('Tema: claro ☀️');
+        }
+    });
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+
+    // ========= SHARE =========
+    document.querySelector('#shareBtn').addEventListener('click', async ()=>{
+      const pessoa = pessoaSelect.value;
+      const url = `${location.origin}${location.pathname}?p=${pessoa}`;
+      try{
+        if(navigator.share){
+          await navigator.share({ title:'Lista de Presentes', text:`Veja a lista de ${pessoa==='mozi'?'Mozi 💘':'Laurinha 🌷'}`, url });
+        }else{
+          await navigator.clipboard.writeText(url);
+          toast('Link da lista copiado! 🔗');
+        }
+        confetti();
+      }catch{}
+    });
+
+    // ========= EVENTOS UI =========
+    pessoaSelect.addEventListener('change', ()=> render(pessoaSelect.value));
+    buscaInput.addEventListener('input', ()=> render(pessoaSelect.value));
+    document.querySelector('#limpar').addEventListener('click', ()=>{
+      buscaInput.value=''; buscaInput.focus(); render(pessoaSelect.value);
+    });
+    
+    // ========= INIT =========
+    render(pessoaSelect.value);
+
+    // Acessibilidade: tecla "/" foca busca
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='/'){ e.preventDefault(); buscaInput.focus(); }
+    });
+
+    // --- LÓGICA DA MÚSICA DE NATAL ---
+    const musicBtn = document.getElementById('musicBtn');
+    const christmasMusic = document.getElementById('christmasMusic');
+    christmasMusic.volume = 0.3;
+
+    musicBtn.addEventListener('click', () => {
+      if (christmasMusic.paused) {
+        christmasMusic.play();
+      } else {
+        christmasMusic.pause();
+      }
+    });
+  </script>
+</body>
+</html>
