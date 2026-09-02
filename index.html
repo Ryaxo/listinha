@@ -170,6 +170,167 @@
 
     .hide{ display:none !important; }
 
+
+    /* --- AVISO E TUTORIAL ALIEXPRESS --- */
+    .aliexpress-notice{
+      max-width:1000px;
+      margin:0 auto 18px;
+      padding:16px 18px;
+      border:1px solid rgba(255,215,0,.35);
+      background:linear-gradient(135deg,rgba(255,193,7,.16),rgba(255,95,210,.10));
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .aliexpress-notice strong{
+      display:block;
+      font-size:1.05rem;
+      margin-bottom:4px;
+    }
+    .aliexpress-notice span{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.35;
+    }
+    .aliexpress-notice .btn{
+      white-space:nowrap;
+    }
+
+    .tutorial-overlay{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(0,0,0,.62);
+      backdrop-filter:blur(7px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease;
+    }
+    .tutorial-overlay.open{
+      opacity:1;
+      pointer-events:auto;
+    }
+    .tutorial-modal{
+      width:min(680px,100%);
+      max-height:min(86vh,760px);
+      overflow:auto;
+      border:1px solid var(--card-border);
+      border-radius:20px;
+      background:linear-gradient(180deg,rgba(48,43,99,.97),rgba(15,12,41,.97));
+      color:var(--text);
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+      transform:translateY(12px) scale(.98);
+      transition:transform .2s ease;
+    }
+    html[data-theme='light'] .tutorial-modal{
+      background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,247,255,.98));
+    }
+    .tutorial-overlay.open .tutorial-modal{
+      transform:translateY(0) scale(1);
+    }
+    .tutorial-head{
+      position:sticky;
+      top:0;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 20px;
+      border-bottom:1px solid var(--card-border);
+      background:rgba(15,12,41,.82);
+      backdrop-filter:blur(12px);
+    }
+    html[data-theme='light'] .tutorial-head{
+      background:rgba(255,255,255,.88);
+    }
+    .tutorial-head h2{
+      margin:0;
+      font-size:1.25rem;
+    }
+    .tutorial-close{
+      border:1px solid var(--card-border);
+      background:var(--card);
+      color:var(--text);
+      border-radius:10px;
+      width:38px;
+      height:38px;
+      cursor:pointer;
+      font-size:1.2rem;
+    }
+    .tutorial-body{
+      padding:20px;
+    }
+    .tutorial-body h3{
+      margin:18px 0 8px;
+      font-size:1.05rem;
+    }
+    .tutorial-body h3:first-child{
+      margin-top:0;
+    }
+    .tutorial-body p{
+      color:var(--muted);
+      line-height:1.5;
+      margin:.45rem 0;
+    }
+    .tutorial-body ol{
+      margin:8px 0 16px;
+      padding-left:24px;
+    }
+    .tutorial-body li{
+      color:var(--muted);
+      line-height:1.5;
+      margin:7px 0;
+    }
+    .timer-rule{
+      margin-top:12px;
+      padding:13px 15px;
+      border-radius:13px;
+      border:1px solid var(--card-border);
+      background:var(--card);
+    }
+    .timer-rule b{
+      color:var(--text);
+    }
+    .timer-example{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    .timer-example div{
+      padding:12px;
+      border-radius:12px;
+      background:var(--card);
+      border:1px solid var(--card-border);
+      text-align:center;
+    }
+    .timer-ok{ border-color:rgba(0,255,209,.45)!important; }
+    .timer-bad{ border-color:rgba(255,95,210,.45)!important; }
+    .tutorial-warning{
+      margin-top:16px;
+      padding:13px 15px;
+      border-radius:13px;
+      background:rgba(255,193,7,.12);
+      border:1px solid rgba(255,193,7,.3);
+      color:var(--muted);
+      line-height:1.45;
+    }
+    @media (max-width:600px){
+      .timer-example{ grid-template-columns:1fr; }
+      .tutorial-body{ padding:16px; }
+      .tutorial-head{ padding:15px 16px; }
+    }
+
     /* --- ESTILO DO BOTÃO DE MÚSICA --- */
     #musicBtn {
       position: fixed;
@@ -218,6 +379,91 @@
   </header>
 
   <main>
+
+    <div class="aliexpress-notice">
+      <div>
+        <strong> 👛 Antes de comprar no AliExpress, procura o item na aba de Moedas!</strong>
+        <span>Dá para encontrar um preço melhor e, em alguns casos, frete grátis.</span>
+      </div>
+      <button class="btn primary" id="tutorialBtn" type="button">🚚 Como tentar zerar o frete</button>
+    </div>
+
+    <div class="tutorial-overlay" id="tutorialOverlay" aria-hidden="true">
+      <div class="tutorial-modal" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+        <div class="tutorial-head">
+          <h2 id="tutorialTitle">🪙 Tutorial: tentando zerar o frete</h2>
+          <button class="tutorial-close" id="tutorialClose" type="button" aria-label="Fechar tutorial">✕</button>
+        </div>
+
+        <div class="tutorial-body">
+          <h3>🛍️ 1. Primeiro, procura nas Moedas</h3>
+          <p>
+            Antes de comprar o item principal, procura o mesmo produto na <strong>aba de Moedas</strong>
+            do AliExpress do celular e confere se existe uma oferta melhor.
+          </p>
+
+          <h3>🚚 2. Verifica o frete do item principal</h3>
+          <ol>
+            <li>Abre o item principal.</li>
+            <li>Vai até a etapa de compra e confere o frete.</li>
+            <li>Se tiver cobrança de frete por o pedido ficar abaixo de R$100, sai da compra e tenta de novo.</li>
+          </ol>
+
+          <h3>➕ 3. Adicione um item extra</h3>
+          <ol>
+            <li>Ao entrar na compra de novo, na área de pagamento, procura uma opção de item adicional para adicionar e gerar a condição de isenção do frete.</li>
+            <li>Escolhe um item adicional barato ou que o de valor suficiente para ter frete grátis e coloca junto do item principal.</li>
+            <li>Confere novamente o pedido e veja se o frete ficou zerado.</li>
+          </ol>
+
+          <h3>💳 4. Selecione PIX</h3>
+          <ol>
+            <li>Escolha <strong>PIX</strong> como forma de pagamento.</li>
+            <li>Gera o PIX, mas confere os detalhes do pedido antes de pagar.</li>
+          </ol>
+
+          <div class="timer-rule">
+            <strong>⏱️ Regra do timer</strong>
+            <p>
+              O <b>timer do item adicional precisa ser menor que o timer do item principal</b>.
+            </p>
+
+            <div class="timer-example">
+              <div class="timer-ok">
+                ✅ Item principal: <strong>25 min</strong><br>
+                Item adicional: <strong>8 min</strong>
+              </div>
+              <div class="timer-bad">
+                ❌ Item principal: <strong>8 min</strong><br>
+                Item adicional: <strong>25 min</strong>
+              </div>
+            </div>
+          </div>
+
+          <h3>🔄 5. Se o timer não estiver certo</h3>
+          <ol>
+            <li>Se o timer do item adicional for maior que o do item principal, <strong>cancela a compra</strong>.</li>
+            <li>Volta ao item principal.</li>
+            <li>Escolhe outro item adicional oferecido na lista que vai te aparecer no momento da compra.</li>
+            <li>Gera novamente o PIX e confere os timers.</li>
+            <li>Repete até encontrar uma combinação em que o timer do item adicional seja menor que o item principal desejado.</li>
+          </ol>
+
+          <h3>⏳ 6. Depois</h3>
+          <p>
+            Quando a combinação estiver correta, espera o timer do item adicional chegar a zero
+            E confirma/paga a compra avulsa do item principal.
+          </p>
+
+          <div class="tutorial-warning">
+            ⚠️ <strong>Importante:</strong> frete, promoções, condições de isenção, itens adicionais
+            e timers podem variar conforme a oferta. Sempre confira o valor final e as condições
+            exibidas pelo AliExpress antes de concluir qualquer pagamento.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section-heading">
       <h2 id="heading">💘 Lista do Mozi</h2>
       <span class="hint" id="countHint">0 itens</span>
@@ -268,8 +514,6 @@
         { titulo: "Creme pros zóio", emoji:"👁", link:"https://www.amazon.com.br/dp/B08XZ91H3M/"},
         { titulo: "Cortina blackout", emoji:"🌤", link:null},
         { titulo: "Camiseta legal", emoji:"👕", link:null},
-        { titulo: "Cinto", emoji:"👖", link:"null"},
-        { titulo: "Porta tômpero", emoji:"🧂", link:"https://www.mercadolivre.com.br/porta-temperos-e-condimentos-giratorio-com-12-potes-vidro-cor-preto/p/MLB52162590"},
         { titulo: "Tripé não bambo para o telescópio", emoji:"📸", link:null},
         { titulo: "Refletora para o telescópio", emoji:"🔭", link:null},
         { titulo: "Bermuda legal", emoji:"🩳", link:null},
@@ -279,13 +523,14 @@
         { titulo: "Perfume de manga Vulcan Feu - French Avenue", emoji:"🥭", link: "https://www.mercadolivre.com.br/french-avenue-vulcan-feu-extrait-eau-de-parfum-100-ml-erian/p/MLB66053210"},
         { titulo: "Sabonete Darrow Actine", emoji:"🧼", link:"https://www.amazon.com.br/Actine-Sabonete-L%C3%ADquido-acneira-Darrow/dp/B0B2FFH6GS"},
         { titulo: "Mouse Pad do pavão coisa már linda", emoji:"🦚", link:"https://www.amazon.com.br/gp/product/B0D14BTC8T"},
-        { titulo: "Controle de PC (Somente se estiver muito barato)", emoji:"🎮", link:"https://pt.aliexpress.com/item/1005008143238728.html"},
         { titulo: "Faca de churrasco", emoji:"🔪", link:null},
         { titulo: "Camiseta Alpha Co Apex Black", emoji:"👕", link:"https://usealphaco.com.br/products/camiseta-apex-dry-core-marinho-sem-costura"},
         { titulo: "Jaqueta Adidas kung fu coisa mar linda nenê ké", emoji:"🧥", link:"https://shopee.com.br/product/1697628329/48959787395", nota: "Pretchinha, tamanho L. OBS.:Não comprar caro"},
         { titulo: "Teclado Vermelhinho coisa mar linda nenê ké", emoji:"⌨️", link:"https://pt.aliexpress.com/item/1005009531993505.html", nota: "O vermelho e preto za linda. OBS.:Não comprar caro"},
         { titulo: "Teclado Roxinho coisa mar linda nenê fica louco", emoji:"⌨️", link:"https://pt.aliexpress.com/item/1005009532626729.html", nota: "O Roxinho e branco estupidamente bonito za linda. OBS.:Não comprar caro"},
         { titulo: "Mousepad xodôzinho do mozi trevoso", emoji:"🖱️", link:"https://pt.aliexpress.com/item/1005006655355138.html", nota: "O trevoso, obviamente. OBS.:Não comprar caro"},
+        { titulo: "Controlinho de PC/Console", emoji:"🎮", link:"https://pt.aliexpress.com/item/1005008114401620.html", nota: "OBS.:Não comprar caro"},
+        { titulo: "Controlinho de PC/Console versão már baratinha do mozi trevoso", emoji:"🎮", link:"https://pt.aliexpress.com/item/1005007093085200.html"},
       ],
       laurinha: [
         { titulo: "Tarde de chamego com o mozi", emoj:"💖", nota:"INESTIMÁVEL"},
@@ -299,7 +544,6 @@
         { titulo: "Caneta dos Hashiras", emoji:"🖋", link:"https://pt.aliexpress.com/item/1005007594376656.html"},
         { titulo: "Mini Aspirador de pó", emoji:"💨", link:"https://pt.aliexpress.com/item/1005008129594453.html"},
         { titulo: "Suporte para celular", emoji:"📱", link:null},
-        { titulo: "Clamper", emoji:"⚡", link:"https://www.amazon.com.br/gp/product/B0DC82WBFD"},
         { titulo: "Brusinha P-M", emoji:"👚", link:null},
         { titulo: "Pijama", emoji:"👚", link:null},
         { titulo: "Vestido", emoji:"👗", link:null},
@@ -467,6 +711,37 @@
       buscaInput.value=''; buscaInput.focus(); render(pessoaSelect.value);
     });
     
+
+    // ========= TUTORIAL ALIEXPRESS =========
+    const tutorialBtn = document.getElementById('tutorialBtn');
+    const tutorialOverlay = document.getElementById('tutorialOverlay');
+    const tutorialClose = document.getElementById('tutorialClose');
+
+    function openTutorial(){
+      tutorialOverlay.classList.add('open');
+      tutorialOverlay.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeTutorial(){
+      tutorialOverlay.classList.remove('open');
+      tutorialOverlay.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    tutorialBtn.addEventListener('click', openTutorial);
+    tutorialClose.addEventListener('click', closeTutorial);
+
+    tutorialOverlay.addEventListener('click', (e)=>{
+      if(e.target === tutorialOverlay) closeTutorial();
+    });
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && tutorialOverlay.classList.contains('open')){
+        closeTutorial();
+      }
+    });
+
     // ========= INIT =========
     render(pessoaSelect.value);
 
